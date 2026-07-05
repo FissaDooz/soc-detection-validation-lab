@@ -1,0 +1,48 @@
+# Windows Security Event 4625 (anonymized sample)
+# Source: Hydra brute-force test against the domain controller (see docs/methodology.md, docs/results.md)
+# IPs and domain names below are anonymized (10.x.x.x range, *.example.lab). Account name replaced with a generic test account.
+
+12/10/2025 02:13:35.488 PM
+LogName=Security
+EventCode=4625
+EventType=0
+ComputerName=DC1.ad.example.lab
+SourceName=Microsoft Windows security auditing.
+Type=Information
+RecordNumber=419077
+Keywords=Audit Failure
+TaskCategory=Logon
+OpCode=Info
+Message=An account failed to log on.
+Subject:
+	Security ID:		S-1-5-18
+	Account Name:		DC1$
+	Account Domain:		AD
+	Logon ID:		0x3E7
+Logon Type:			3
+Account For Which Logon Failed:
+	Security ID:		S-1-0-0
+	Account Name:		testuser1
+	Account Domain:		AD
+Failure Information:
+	Failure Reason:		Unknown user name or bad password.
+	Status:			0xC000006D
+	Sub Status:		0xC000006A
+Process Information:
+	Caller Process ID:	0x2d8
+	Caller Process Name:	C:\Windows\System32\lsass.exe
+Network Information:
+	Workstation Name:	DC1
+	Source Network Address:	10.10.100.48
+	Source Port:		48376
+Detailed Authentication Information:
+	Logon Process:		Advapi
+	Authentication Package:	MICROSOFT_AUTHENTICATION_PACKAGE_V1_0
+	Transited Services:	-
+	Package Name (NTLM only):	-
+	Key Length:		0
+
+# Notes:
+# - This event is generated when a logon request fails, on the computer where access was attempted.
+# - Logon Type 3 = network logon (SMB / NTLM), consistent with a remote brute-force attempt.
+# - Status 0xC000006D / Sub Status 0xC000006A = bad username or password.

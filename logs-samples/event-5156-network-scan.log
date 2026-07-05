@@ -1,0 +1,55 @@
+# Windows Security Event 5156 (anonymized sample)
+# Source: Nmap reconnaissance scan against the domain controller (see docs/methodology.md, docs/results.md)
+# IPs and domain names below are anonymized (10.x.x.x range, *.example.lab).
+
+Date/Time: 12/11/2025 - 13:19:25.843
+
+Host - DC1
+Source - Win Event Log : Security
+Source type - Win Event Log
+
+Event:
+Application_Name - \device\harddiskvolume3\windows\system32\lsass.exe
+ComputerName - DC1.ad.example.lab
+Destination_Address - 10.20.20.1
+Destination_Port - 389
+Direction - Inbound
+Error_Code - /
+EventCode - 5156
+EventType - 0
+Filter_Origin - Unknown
+Filter_Run_Time_ID - 0
+Interface_Index - 8
+Keywords - Audit Success
+Layer_Name - Receive/Accept
+Layer_Run_Time_ID - 44
+LogName - Security
+
+Message:
+The Windows Filtering Platform has permitted a connection.
+
+Application Information:
+ Process ID: 728
+ Application Name: \device\harddiskvolume3\windows\system32\lsass.exe
+
+Network Information:
+Direction: Inbound
+Source Address: 10.10.100.45
+Source Port: 40424
+Destination Address: 10.20.20.1
+Destination Port: 389
+Protocol: 6
+Interface Index: 8
+
+Filter Information:
+Filter Origin: Unknown
+Filter Run-Time ID: 0
+Layer Name: Receive/Accept
+Layer Run-Time ID: 44
+Remote User ID: S-1-0-0
+Remote Machine ID: S-1-0-0
+
+# Notes:
+# - EventCode 5156 = Windows Filtering Platform permitted a connection; Keywords "Audit Success" means nothing was blocked.
+# - Destination port 389/TCP = LDAP (Active Directory), destination process lsass.exe = AD authentication service.
+# - A burst of this event from a single source host against the DC's LDAP port is a typical port-scan / service-discovery signature.
